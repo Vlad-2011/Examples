@@ -1,0 +1,341 @@
+import pygame
+import sys
+import math
+import random
+import asyncio
+import pygbag
+
+pygame.init()
+
+# Initialize screen and clock
+screen_width = 1920
+screen_height = 1080
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Tanks World")
+clock = pygame.time.Clock()
+
+# Load sound effects
+shoot_sound = pygame.mixer.Sound('Shoot.mp3')
+explosion_sound = pygame.mixer.Sound('explosion.mp3')
+
+class Tank(pygame.sprite.Sprite):
+    def __init__(self, x, y, color, direction):
+        super().__init__()
+        self.image = pygame.Surface((32, 32))
+        self.image.fill(color)
+        self.rect = self.image.get_rect(center=(screen_width/2, screen_height/2))
+        self.direction = direction
+        self.speed = 2
+        self.invincible = False
+
+    def update(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            self.rect.y -= self.speed
+            if self.rect.top < 0:
+                self.rect.top = 0
+        if keys[pygame.K_DOWN]:
+            self.rect.y += self.speed
+            if self.rect.bottom > screen_height:
+                self.rect.bottom = screen_height
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= self.speed
+            if self.rect.left < 0:
+                self.rect.left = 0
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += self.speed
+            if self.rect.right > screen_width:
+                self.rect.right = screen_width
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+class Tank2(Tank):
+    def update(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_w]:
+            self.rect.y -= self.speed
+            if self.rect.top < 0:
+                self.rect.top = 0
+        if keys[pygame.K_s]:
+            self.rect.y += self.speed
+            if self.rect.bottom > screen_height:
+                self.rect.bottom = screen_height
+        if keys[pygame.K_a]:
+            self.rect.x -= self.speed
+            if self.rect.left < 0:
+                self.rect.left = 0
+        if keys[pygame.K_d]:
+            self.rect.x += self.speed
+            if self.rect.right > screen_width:
+                self.rect.right = screen_width
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, x, y, direction):
+        super().__init__()
+        self.image = pygame.Surface((4, 4))
+        self.image.fill((255, 255, 255))
+        self.rect = self.image.get_rect(center=(x, y))
+        self.direction = direction
+        self.speed = 5
+
+    def update(self):
+        if self.direction == 'up':
+            self.rect.y -= self.speed
+            if self.rect.top < 0:
+                self.kill()
+        if self.direction == 'down':
+            self.rect.y += self.speed
+            if self.rect.bottom > screen_height:
+                self.kill()
+        if self.direction == 'left':
+            self.rect.x -= self.speed
+            if self.rect.left < 0:
+                self.kill()
+        if self.direction == 'right':
+            self.rect.x += self.speed
+            if self.rect.right > screen_width:
+                self.kill()
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.Surface((32, 32))
+        self.health = random.randint(1, 5)
+        self.update_color()
+        self.rect = self.image.get_rect(topleft=(x, y))
+        self.speed = 1
+
+    def update_color(self):
+        if self.health == 1:
+            self.image.fill((255, 0, 0))  # Red for low health
+        elif self.health == 2:
+            self.image.fill((255, 128, 0))  # Orange for medium-low health
+        elif self.health == 3:
+            self.image.fill((255, 255, 0))  # Yellow for medium health
+        elif self.health == 4:
+            self.image.fill((0, 255, 0))  # Green for medium-high health
+        else:
+            self.image.fill((0, 0, 255))  # Blue for high health
+
+    def take_damage(self):
+        self.health -= 1
+        if self.health <= 0:
+            self.kill()
+        self.update_color()
+
+    def move_towards_player(self, players):
+        closest_player = min(players, key=lambda player: math.hypot(player.rect.x - self.rect.x, player.rect.y - self.rect.y))
+        dx = closest_player.rect.x - self.rect.x
+        dy = closest_player.rect.y - self.rect.y
+        dist = math.hypot(dx, dy)
+        if dist > 0:
+            dx /= dist
+            dy /= dist
+            self.rect.x += dx * self.speed
+            self.rect.y += dy * self.speed
+            if self.rect.left < 0:
+                self.rect.left = 0
+            if self.rect.right > screen_width:
+                self.rect.right = screen_width
+            if self.rect.top < 0:
+                self.rect.top = 0
+            if self.rect.bottom > screen_height:
+                self.rect.bottom = screen_height
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+class Explosion(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.Surface((32, 32))
+        self.image.fill((255, 255, 0))
+        self.rect = self.image.get_rect(center=(x, y))
+        self.frame = 0
+
+    def update(self):
+        self.frame += 0.1
+        if self.frame > 3:
+            self.kill()
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+class PowerUp(pygame.sprite.Sprite):
+    def __init__(self, x, y, type):
+        super().__init__()
+        self.image = pygame.Surface((16, 16))
+        self.image.fill((255, 255, 0))  # Yellow for power-up
+        self.rect = self.image.get_rect(topleft=(x, y))
+        self.type = type
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+def spawn_enemy():
+    # Choose a random border
+    border = random.choice(['top', 'bottom', 'left', 'right'])
+
+    if border == 'top':
+        x = random.randint(0, screen_width - 32)
+        y = 0
+    elif border == 'bottom':
+        x = random.randint(0, screen_width - 32)
+        y = screen_height - 32
+    elif border == 'left':
+        x = 0
+        y = random.randint(0, screen_height - 32)
+    else: # right
+        x = screen_width - 32
+        y = random.randint(0, screen_height - 32)
+
+    return Enemy(x, y)
+
+def spawn_power_up():
+    x = random.randint(0, screen_width - 16)
+    y = random.randint(0, screen_height - 16)
+    return PowerUp(x, y, random.choice(['speed', 'invincibility']))
+
+async def main():
+    tank = Tank(100, 100, (255, 0, 0), 'up')
+    tank2 = Tank2(300, 300, (255, 0, 0), 'up')
+    bullets = pygame.sprite.Group()
+    enemies = pygame.sprite.Group()
+    explosions = pygame.sprite.Group()
+    power_ups = pygame.sprite.Group()
+
+    # Initial enemy spawn settings
+    wave_size = 10
+    wave_count = 0
+    enemy_spawn_timer = 0
+    enemies_spawned = 0
+
+    score = 0
+    start_time = pygame.time.get_ticks()
+
+
+    # Game over state
+    game_over = False
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_w]:
+                        direction = 'up'
+                    elif keys[pygame.K_s]:
+                        direction = 'down'
+                    elif keys[pygame.K_a]:
+                        direction = 'left'
+                    elif keys[pygame.K_d]:
+                        direction = 'right'
+                    else:
+                        direction = 'up'  # Default direction if no arrow key is pressed
+                    bullet = Bullet(tank2.rect.centerx, tank2.rect.centery, direction)
+                    bullets.add(bullet)
+                    shoot_sound.play()
+
+                if event.key == pygame.K_m: # Assuming 'f' key for tank2
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_UP]:
+                        direction = 'up'
+                    elif keys[pygame.K_DOWN]:
+                        direction = 'down'
+                    elif keys[pygame.K_LEFT]:
+                        direction = 'left'
+                    elif keys[pygame.K_RIGHT]:
+                        direction = 'right'
+                    else:
+                        direction = 'up'  # Default direction if no arrow key is pressed
+                    bullet = Bullet(tank.rect.centerx, tank.rect.centery, direction)
+                    bullets.add(bullet)
+                    shoot_sound.play()
+
+        screen.fill((0, 0, 0))
+        if not game_over:
+            tank.update()
+            tank2.update()
+            tank.draw(screen)
+            tank2.draw(screen)
+
+            # Spawn enemies in waves
+            enemy_spawn_timer += 1
+            if enemy_spawn_timer > 60 and enemies_spawned < wave_size:
+                enemies.add(spawn_enemy())
+                enemies_spawned += 1
+                enemy_spawn_timer = 0
+
+            # Check if all enemies in the current wave are cleared
+            if len(enemies) == 0 and enemies_spawned >= wave_size:
+                wave_count += 1
+                wave_size += 5  # Increase wave size for the next wave
+                enemies_spawned = 0  # Reset the counter for the next wave
+
+            bullets.update()
+            for bullet in bullets:
+                bullet.draw(screen)
+                if not screen.get_rect().contains(bullet.rect):
+                    bullets.remove(bullet)
+                for enemy in enemies:
+                    if enemy.rect.colliderect(bullet.rect):
+                        enemy.take_damage()
+                        bullets.remove(bullet)
+                        if enemy not in enemies:
+                            explosions.add(Explosion(enemy.rect.centerx, enemy.rect.centery))
+                            score += 1
+                            explosion_sound.play()
+
+            enemies.update()
+            for enemy in enemies:
+                enemy.move_towards_player([tank, tank2])
+                enemy.draw(screen)
+                if enemy.rect.colliderect(tank.rect) or enemy.rect.colliderect(tank2.rect):
+                    if not tank.invincible and not tank2.invincible:
+                        game_over = True
+
+            power_ups.update()
+            for power_up in power_ups:
+                power_up.draw(screen)
+                if power_up.rect.colliderect(tank.rect) or power_up.rect.colliderect(tank2.rect):
+                    if power_up.type == 'speed':
+                        tank.speed = 4
+                        tank2.speed = 4
+                        pygame.time.set_timer(pygame.USEREVENT, 5000)  # Reset speed after 5 seconds
+                    elif power_up.type == 'invincibility':
+                        tank.invincible = True
+                        tank2.invincible = True
+                        pygame.time.set_timer(pygame.USEREVENT, 5000)  # Reset invincibility after 5 seconds
+                    power_ups.remove(power_up)
+
+            explosions.update()
+            explosions.draw(screen)
+
+            # Display score and time
+            font = pygame.font.Font(None, 36)
+            score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+            time_text = font.render(f"Time: {int((pygame.time.get_ticks() - start_time) / 1000)} seconds", True, (255, 255, 255))
+            wave_text = font.render(f"Wave: {wave_count + 1}", True, (255, 255, 255))
+            screen.blit(score_text, (10, 10))
+            screen.blit(time_text, (10, 50))
+            screen.blit(wave_text, (10, 90))
+
+        else:
+            # Display Game Over message
+            font = pygame.font.Font(None, 72)
+            game_over_text = font.render("Game Over", True, (255, 255, 255))
+            screen.blit(game_over_text, (screen_width // 2 - game_over_text.get_width() // 2, screen_height // 2 - game_over_text.get_height() // 2))
+
+        pygame.display.flip()
+        clock.tick(60)
+
+asyncio.run(main())
