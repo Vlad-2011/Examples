@@ -1,0 +1,85 @@
+import sys
+import heapq
+
+def solve():
+    input = sys.stdin.read
+    data = input().split()
+    n = int(data[0])
+    arr = list(map(int, data[1:]))
+
+    pos = [0] * (n + 1)
+    for idx, val in enumerate(arr):
+        pos[val] = idx  # позиция в исходном списке для данного номера
+
+    chosen = [False] * (n + 1)
+    min_dist = [0] * (n + 1)
+
+    heap = []
+
+    first = arr[0]
+    chosen[first] = True
+    
+    for x in range(1, n + 1):
+        if x != first:
+            dist = abs(x - first)
+            min_dist[x] = dist
+            heapq.heappush(heap, (-dist, -pos[x], x))
+
+    result = [first]
+    sorted_chosen = [first]
+
+    for _ in range(n - 1):
+        while True:
+            neg_d, neg_idx, val = heapq.heappop(heap)
+            if chosen[val]:
+                continue
+            
+            import bisect
+            idx_in_sorted = bisect.bisect_left(sorted_chosen, val)
+            left = sorted_chosen[idx_in_sorted - 1] if idx_in_sorted > 0 else None
+            right = sorted_chosen[idx_in_sorted] if idx_in_sorted < len(sorted_chosen) else None
+            current_min_dist = 10**9
+            if left is not None:
+                current_min_dist = min(current_min_dist, val - left)
+            if right is not None:
+                current_min_dist = min(current_min_dist, right - val)
+            if current_min_dist == -neg_d:
+                break
+            else:
+                min_dist[val] = current_min_dist
+                heapq.heappush(heap, (-current_min_dist, -pos[val], val))
+        
+        chosen[val] = True
+        bisect.insort(sorted_chosen, val)
+        result.append(val)
+        
+        idx_in_sorted = bisect.bisect_left(sorted_chosen, val)
+        left = sorted_chosen[idx_in_sorted - 1] if idx_in_sorted > 0 else None
+        right = sorted_chosen[idx_in_sorted + 1] if idx_in_sorted + 1 < len(sorted_chosen) else None
+        if left is not None and not chosen[left]:
+            new_dist = 10**9
+            left_idx = bisect.bisect_left(sorted_chosen, left)
+            left_left = sorted_chosen[left_idx - 1] if left_idx > 0 else None
+            left_right = sorted_chosen[left_idx + 1] if left_idx + 1 < len(sorted_chosen) else None
+            if left_left is not None:
+                new_dist = min(new_dist, left - left_left)
+            if left_right is not None:
+                new_dist = min(new_dist, left_right - left)
+            min_dist[left] = new_dist
+            heapq.heappush(heap, (-new_dist, -pos[left], left))
+        if right is not None and not chosen[right]:
+            new_dist = 10**9
+            right_idx = bisect.bisect_left(sorted_chosen, right)
+            right_left = sorted_chosen[right_idx - 1] if right_idx > 0 else None
+            right_right = sorted_chosen[right_idx + 1] if right_idx + 1 < len(sorted_chosen) else None
+            if right_left is not None:
+                new_dist = min(new_dist, right - right_left)
+            if right_right is not None:
+                new_dist = min(new_dist, right_right - right)
+            min_dist[right] = new_dist
+            heapq.heappush(heap, (-new_dist, -pos[right], right))
+
+    print(' '.join(map(str, result)))
+
+if __name__ == "__main__":
+    solve()
