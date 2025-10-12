@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int main()
+{
+    int num1;
+    int num2;
+    int num3;
+    int positive_numbers = 0;
+    int negative_numbers = 0;
+    
+    printf("Первое число: ");
+    scanf("%i", &num1);    
+    printf("Второе число: ");
+    scanf("%i", &num2);    
+    printf("Третье число: ");
+    scanf("%i", &num3);
+    
+    if (num1 >= 0)
+    {
+        positive_numbers += 1;
+    }
+    else
+    {
+        negative_numbers += 1;
+    }
+    if (num2 >= 0)
+    {
+        positive_numbers += 1;
+    }
+    else
+    {
+        negative_numbers += 1;
+    }
+    if (num3 >= 0)
+    {
+        positive_numbers += 1;
+    }
+    else
+    {
+        negative_numbers += 1;
+    }
+    
+    printf("Положительных чисел: %i\n", positive_numbers);
+    printf("Отрицательных чисел: %i", negative_numbers);
+}
