@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int A, B, i;
+    
+    scanf("%i", &A);
+    scanf("%i", &B);
+    
+    if (A < B) {
+        for (int i = A; i <= B; i++) {
+            printf("%i ", i);
+        }
+    }
+    else {
+        for (int i = A; i > B; i--) {
+            printf("%i ", i);
+        }
+    }
+    
+    return 0;
+}
