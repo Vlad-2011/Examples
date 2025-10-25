@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int number, count = 0, sum = 0;
+    int positive_count = 0, negative_count = 0;
+
+    printf("Введите последовательность чисел (0 для завершения):\n");
+
+    while (1) {
+        scanf("%d", &number);
+
+        if (number == 0) {
+            break;
+        }
+
+        count++;
+        sum += number;
+
+        if (number > 0) {
+            positive_count++;
+        } else {
+            negative_count++;
+        }
+    }
+
+    if (count == 0) {
+        printf("Не введено ни одного числа!\n");
+        return 0;
+    }
+
+    printf("\nСтатистика:\n");
+    printf("Всего чисел: %d\n", count);
+    printf("Сумма чисел: %d\n", sum);
+    printf("Положительных чисел: %d\n", positive_count);
+    printf("Отрицательных чисел: %d\n", negative_count);
+
+    double average = (double)sum / count;
+    printf("\nТаблица умножения на среднее значение (%.2f):\n", average);
+    for (int i = 1; i <= 5; i++) {
+        printf("%.2f × %d = %.2f\n", average, i, average * i);
+    }
+
+    return 0;
+}
