@@ -1,0 +1,29 @@
+#include<stdio.h>
+
+int main() {
+    int n;
+    
+    // Ввод размеров массива
+    printf("Введите размер массива: ");
+    scanf("%i", &n);
+    
+    int arr[n];
+    
+    // Ввод элементов массива
+    printf("Введите %i элементов массива:\n", n);
+    for (int i = 0; i < n; i++) {
+        printf("arr[%i] = ", i);
+        scanf("%i", &arr[i]);
+    }
+    
+    // Вывод чëтных элементов
+    printf("\nЧëтные элементы массива: ");
+    for (int i = 0; i < n; i++) {
+        if (arr[i] % 2 == 0) {
+            printf("%i, ", arr[i]);
+        }
+    }
+    printf("\n");
+    
+    return 0;
+}
