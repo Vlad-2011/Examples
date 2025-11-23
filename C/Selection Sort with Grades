@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+// Функция для сравнения двух оценок согласно условию задачи
+int compare(int a, int b) {
+    // Положительные оценки (4,5) должны идти перед отрицательными (2,3)
+    if (a >= 4 && b < 4) return -1;
+    if (a < 4 && b >= 4) return 1;
+    // Если оценки в одной группе, сортируем по возрастанию
+    return a - b;
+}
+
+// Модифицированная сортировка выбором
+void customSelectionSort(int *grades, int size) {
+    int min_index, temp;
+
+    for (int i = 0; i < size - 1; i++) {
+        min_index = i;
+ 
+        // Ищем минимальный элемент согласно нашему условию сравнения
+        for (int j = i + 1; j < size; j++) {
+            if (compare(grades[j], grades[min_index]) < 0) {
+                min_index = j;
+            }
+        }
+ 
+        // Меняем местами найденный минимальный элемент с текущим
+        temp = grades[i];
+        grades[i] = grades[min_index];
+        grades[min_index] = temp;
+    }
+}
+ 
+int main() {
+    int grades[10];
+
+    printf("Введите 10 оценок (2, 3, 4 или 5):\n");
+    for (int i = 0; i < 10; i++) {
+        printf("Ученик %d: ", i + 1);
+        scanf("%d", &grades[i]);
+ 
+        // Проверка корректности ввода
+        if (grades[i] < 2 || grades[i] > 5) {
+            printf("Ошибка! Оценка должна быть от 2 до 5.\n");
+            i--; // Повторяем ввод для этого ученика
+        }
+    }
+
+    printf("\nИсходные оценки: ");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", grades[i]);
+    }
+ 
+    // Сортируем оценки
+    customSelectionSort(grades, 10);
+
+    printf("\nОтсортированные оценки: ");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", grades[i]);
+    }
+
+    // Дополнительная информация
+    printf("\n\nПоложительные оценки (4-5): ");
+    for (int i = 0; i < 10; i++) {
+        if (grades[i] >= 4) printf("%d ", grades[i]);
+    }
+ 
+    printf("\nОтрицательные оценки (2-3): ");
+    for (int i = 0; i < 10; i++) {
+        if (grades[i] < 4) printf("%d ", grades[i]);
+    }
+    return 0;
+}
