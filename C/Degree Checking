@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int check(int n) {
+    if (n == 1) {
+        return 1;
+    }
+    return n % 2 + check(n / 2);
+}
+
+int main() {
+    int N;
+
+    printf("Введите число N: ");
+    scanf("%i", &N);
+
+    if (check(N) == 1) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+
+    return 0;
+}
