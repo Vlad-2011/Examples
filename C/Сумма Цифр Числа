@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int check(int n) {
+    if (n == 0) {
+        return 0;
+    }
+    return n % 10 + check(n / 10);
+}
+
+int main() {
+    int N;
+
+    printf("Введите число N: ");
+    scanf("%i", &N);
+
+    printf("%i\n", check(N));
+
+    return 0;
+}
