@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+void binary(int number10) {
+    int temp[64];
+    int i = 0;
+    int n = number10;
+    while (n>0) {
+        temp[i] = n%2;
+        n = n/2;
+        i++;
+    }
+    for (int j = i - 1; j>=0; j--) {
+        printf("%i", temp[j]);
+    }
+}
+
+int main()
+{
+    int decimal;
+
+    printf("Введите число в десятичной системе: ");
+    scanf("%i", &decimal);
+
+    printf("Шестнадцатеричное представление: %X\n", decimal);
+    printf("Двоичное представление: ");
+    binary(decimal);
+
+    printf("\n");
+    return 0;
+}
