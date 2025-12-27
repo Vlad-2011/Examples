@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int num1, num2;
+    int *a = &num1;
+    int *b = &num2;
+    
+    printf("Введите первое число: ");
+    scanf("%d", a);
+    printf("Введите второе число: ");
+    scanf("%d", b);
+    
+    if (*a > *b) {
+        printf("%d - наибольшее число", *a);
+    } else {
+        printf("%d - наибольшее число", *b);
+    }
+    
+    return 0;
+}
