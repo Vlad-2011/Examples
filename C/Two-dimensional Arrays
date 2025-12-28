@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <malloc.h>
+
+int main(void)
+{
+    int **table; // Указатель для блока памяти для массива указателей
+    int *rows; // Для хранения информации по строкам
+    int rowscount; // Количество строк
+    int d; // Вводимое число
+    int i, j; // Переменные для циклов
+
+    // Ввод количества строк
+    printf("Rows count = ");
+    scanf("%d", &rowscount);
+
+    // Выделение памяти для двумерного массива
+    table = malloc(rowscount * sizeof(int*));
+    rows = malloc(sizeof(int)*rowscount);
+
+    // Цикл
+    for (i = 0; i < rowscount; i++) {
+        printf("\nColums count for row %i = ", i);
+        scanf("%i", &rows[i]);
+        table[i] = malloc(rows[i]*sizeof(int));
+    }
+    for (i = 0; i < rowscount; i++) {
+        for (j = 0; j < rows[i]; j++) {
+            printf("table[%i][%i] = ", i, j);
+            scanf("%i", &d);
+            table[i][j] = d;
+        }
+    }
+    printf("\n");
+
+    // Вывод введённых чисел
+    for (i = 0; i < rowscount; i++) {
+        printf("\n");
+        for (j = 0; j < rows[i]; j++) {
+            printf("%d", table[i][j]);
+        }
+        // Освобождение памяти для одной строки
+        free(table[i]);
+    }
+    free(table);
+    free(rows);
+
+    return 0;
+}
