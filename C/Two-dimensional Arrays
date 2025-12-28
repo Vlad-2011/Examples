@@ -34,10 +34,10 @@ int main(void)
     printf("\n");
 
     // Вывод введённых чисел
-    for (i = 0; i < rowscount; i++) {
+    for (i = 0; i <= rowscount; i++) {
         printf("\n");
         for (j = 0; j < rows[i]; j++) {
-            printf("%d", table[i][j]);
+            printf("%d ", table[i][j]);
         }
         // Освобождение памяти для одной строки
         free(table[i]);
