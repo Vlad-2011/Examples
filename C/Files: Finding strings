@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void trim(char *str) {
+    int i = 0, j = 0;
+    while (isspace(str[i])) i++;
+    while(str[i]) {
+        str[j++] = str[i++];
+    }
+    str[j] = '\0';
+    j = strlen(str) - 1;
+    while (j >= 0 && isspace(str[j])) {
+        str[j--] = '\0';
+    }
+}
+
+int main()
+{
+    FILE *file = fopen("file.txt", "r");
+    if (!file) {
+        perror("Ошибка открытия файла!");
+        return 1;
+    }
+    char buffer[1000];
+    int lines = 0;
+
+    while (fgets(buffer, sizeof(buffer), file)) {
+        buffer[strcspn(buffer, "\n")] = '\0';
+        trim(buffer);
+        int len = strlen(buffer);
+        if (len > 0 && buffer[0] == buffer[len - 1]) {
+            lines++;
+            printf("Строка найдена %s\n", buffer);
+        }
+    }
+    fclose(file);
+    printf("Всего строк: %i\n", lines);
+}
