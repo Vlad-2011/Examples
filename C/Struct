@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+struct Person {
+    char lastname[20];
+    char name[20];
+};
+
+int main() {
+    struct Person adam;
+    strcpy(adam.lastname, "Ivanov");
+    strcpy(adam.name, "Adam");
+
+    printf("Человек: %s %s\n", adam.lastname, adam.name);
+
+    return 0;
+}
