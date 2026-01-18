@@ -1,18 +1,27 @@
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
+
+struct date {
+    int day;
+    int month;
+    int year;
+};
 
 struct Person {
     char lastname[20];
     char name[20];
+    struct date birthday;
 };
 
 int main() {
     struct Person adam;
     strcpy(adam.lastname, "Ivanov");
     strcpy(adam.name, "Adam");
+    adam.birthday.day = 2;
+    adam.birthday.month = 6;
+    adam.birthday.year = 2011;
 
-    printf("Человек: %s %s\n", adam.lastname, adam.name);
+    printf("Человек: %s %s %i.%i.%i\n", adam.name, adam.lastname, adam.birthday.day, adam.birthday.month, adam.birthday.year);
 
     return 0;
 }
