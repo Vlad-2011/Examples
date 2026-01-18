@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    char name[20];
+    int mark;
+};
+
+int main() {
+    int i, number;
+    float average;
+    printf("\nВведите число студентов: ");
+    scanf("%i", &number);
+    struct Student students[number];
+
+    float sum = 0;
+    for (i = 0; i < number; i++) {
+        printf("Имя %i-го студента: ", i+1);
+        scanf("%19s", students[i].name);
+        printf("Оценка %i-го студента: ", i+1);
+        scanf("%i", &students[i].mark);
+        printf("\n");
+        sum += students[i].mark;
+    }
+    average = sum / number;
+    printf("\nСредний балл всех учеников: %f\n\n", average);
+
+    for (i = 0; i < number; i++) {
+        if (students[i].mark > average) {
+            printf("☆ %s\n", students[i].name);
+        }
+    }
+    printf("\n");
+
+    return 0;
+}
