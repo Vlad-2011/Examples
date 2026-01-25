@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+// Инициализация
+struct list *init(int a) {
+    struct list*lst;
+    lst = (struct list*)malloc(sizeof(struct list));
+    lst->field = a;
+    lst->prt = NULL;
+    return(lst);
+};
+
+// Добавление узла
+struct list*addelem(list *lst, int number) {
+    struct list *temp, *p;
+    temp = (struct list*)malloc(sizeof(list));
+    p = lst->ptr;
+    lst->ptr = temp; // Предыдущий узел указывает на создаваемый
+    temp->field = number; // Сохранение поля данных добавляемого узла
+    temp->ptr = p; // Созданный узел указывается на следующий элемент
+    return(temp);
+};
+
+// Удаление элемента
+struct list *deletelem(list *lst, list*root) {
+    struct list *temp;
+    temp = root;
+    while (temp->ptr != lst) // Просмотр списка начиная с корня
+    {
+        temp = lst->ptr;
+    }
+    temp->ptr = lst->ptr; // Переставляем указатель
+    free(lst);
+    return (temp);
+};
+// Удаление корня
+struct list * deletehead(list*root) {
+    struct list*temp;
+    temp = root->ptr;
+    free(root);
+    return(temp); // Новый корень
+};
+
+// Функция вывода элементов списка
+void listprint(list *lst) {
+    struct list *p;
+    p = lst;
+    do{
+        print("%d", p->field);
+        p = p->ptr;
+    } while(p != NULL);
+}
