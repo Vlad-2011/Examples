@@ -1,0 +1,7 @@
+side = int(input("\nEnter the number: "))
+print(f"S = {side} * {side} = {side**2}\n")
+
+a = int(input("a = "))
+b = int(input("b = "))
+c = int(input("c = "))
+print(f"Sum = {a} + {b} + {c} = {a+b+c}\nV = {a} * {b} * {c} = {a*b*c}\nS = 2 * ({a} * {b} + {b} * {c} + {a} * {c}) = {2*(a*b+b*c+a*c)}\nAverage = ({a} + {b} + {c}) / 2 = {(a+b+c)/2}")
