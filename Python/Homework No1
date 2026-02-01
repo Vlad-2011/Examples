@@ -1,0 +1,45 @@
+import time
+
+print("\n\n===== TASK 1 =====")
+A = int(input("Число A = "))
+B = int(input("Число B = "))
+C = int(input("Число C = "))
+
+print(A > 0 and B > 0 and C > 0)
+
+#if A > 0 and B > 0 and C > 0:
+#    print("Yes")
+#else:
+#    print("False")
+
+time.sleep(1)
+print("\n\n===== TASK 2 =====")
+a = int(input("Число 1 = "))
+b = int(input("Число 2 = "))
+
+if a > b:
+    print(f"{a}, {b}")
+elif a < b:
+    print(f"{b}, {a}")
+else:
+    print("Числа одинаковы")
+
+time.sleep(1)
+print("\n\n===== TASK 3 =====")
+week = {1:"Понедельник", 2:"Вторник", 3:"Среда", 4:"Четверг", 5:"Пятница", 6:"Суббота", 7:"Воскресенье"}
+num = int(input("Введите целое число в диапозоне 1-7: "))
+if 1 <= num <= 7:
+    print(f"День недели: {week[num]}")
+else:
+    print("ОШИБКА: Число должно быть в диапозоне 1-7!")
+
+time.sleep(1)
+print("\n\n===== TASK 4 =====")
+number = int(input("Введите год: "))
+if number >= 0:
+    if number % 4 == 0 and number % 400 == 0 and number % 100 != 0:
+        print("Високосный")
+    else:
+        print("Обычный")
+else:
+    print("ОШИБКА: Число должно быть натуральным!")
