@@ -1,0 +1,5 @@
+a = "Hello"
+print(a.find("l"))
+print(a.rfind("l"))
+print(a.count("l"))
+print(a.replace("l", "Z", 1))
