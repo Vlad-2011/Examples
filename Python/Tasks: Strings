@@ -1,0 +1,7 @@
+print("\n\n------TASK 1------")
+str = input("Введите строку: ")
+print(str.count(' ')+1)
+
+print("\n\n------TASK 2------")
+str = input('Введите строку, состоящую из двух слов: ')
+print(f"{str[str.find(' ')+1:]} {str[:str.find(' ')]}")
