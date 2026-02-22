@@ -1,0 +1,4 @@
+max = 'https://max.ru/'
+search = input().split(' ')
+result = max + '+'.join(search)
+print(result)
