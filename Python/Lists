@@ -1,0 +1,23 @@
+# Задать длину списка и ввести его с клавиатуры
+a = []
+for i in range(int(input('Размер списка: '))):
+    a.append(int(input(f'[{i+1}] -> ')))
+print(a)
+
+# Построчно вывести элементы списка
+for i in range(len(a)):
+    print(a[i])
+
+# Метод split
+s = input() # s == '1 2 3'
+a = s.split() # a == ['1', '2', '3']
+print(a)
+
+a = input().split()
+for i in range(len(a)):
+    a[i] = int(a[i])
+print(a)
+
+# Метод join
+a = ['Олег', 'супер', 'крутой']
+print(', '.join(a))
