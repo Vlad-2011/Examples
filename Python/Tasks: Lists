@@ -1,0 +1,30 @@
+print('\n\n------TASK 1------')
+s = input('Введите значения через пробел: ')
+a = s.split()
+
+for i in range(len(a)):
+    if i % 2 == 0:
+        print(a[i])
+
+print('\n\n------TASK 2------')
+a = input('Введите числа через пробел: ').split()
+for i in range(len(a)):
+    a[i] = int(a[i])
+
+for i in range(1, len(a)):
+    if a[i-1] < a[i]:
+        print(a[i])
+
+print('\n\n------TASK 3------')
+a = input('Введите числа через пробел: ').split()
+for i in range(len(a)):
+    a[i] = int(a[i])
+
+max = a[0]
+max_i = 0
+for i in range(1, len(a)):
+    if a[i] > max:
+        max = a[i]
+        max_i = i
+
+print(f'Наибольшее число: {max}\nИндекс наибольшего числа: {max_i}')
