@@ -16,3 +16,8 @@ for i in primer:
 A = {'a':'ghbds', 'aa':'ffafaf'}
 k = 'a'
 del A[k]
+
+try:
+    del A[s]
+except KeyError:
+    print('ОЙ')
