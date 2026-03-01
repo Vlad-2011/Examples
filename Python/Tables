@@ -12,3 +12,7 @@ for i in primer:
         print(f'Столица страны {i}: {cap[i]}')
     else:
         print('В базе нет такой страны')
+
+A = {'a':'ghbds', 'aa':'ffafaf'}
+k = 'a'
+del A[k]
