@@ -1,0 +1,24 @@
+print('\n\n------{TASK 1}------')
+def mult(a, b):
+    return a*b
+a = int(input('Введите число "a": '))
+n = int(input('Введите число "n": '))
+print(f"Произведение чисел {a} и {n} равно {mult(a, n)}")
+
+print('\n\n------{TASK 2}------')
+def degree(number):
+    global B
+    B = number**3
+    print(f'Число B = {B}')
+A = int(input('Введите число A: '))
+degree(A)
+
+print('\n\n------{TASK 3}------')
+# не решено
+
+print('\n\n------{TASK 4}------')
+def move(a, b):
+    return b,a
+A = int(input('A = '))
+B = int(input('B = '))
+print(move(A, B))
