@@ -1,0 +1,14 @@
+cap = dict() #пустой словарь
+cap ['RUSSIA'] = 'Moscow'
+cap ['Belarus'] = 'Minsk'
+cap ['Egypt'] = 'Kair'
+cap ['China'] = 'Pekin'
+cap ['Germany'] = 'Berlin'
+
+primer = ['RUSSIA', 'France', 'Egypt', 'Russia']
+
+for i in primer:
+    if i in cap:
+        print(f'Столица страны {i}: {cap[i]}')
+    else:
+        print('В базе нет такой страны')
