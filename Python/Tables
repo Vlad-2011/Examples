@@ -18,6 +18,6 @@ k = 'a'
 del A[k]
 
 try:
-    del A[s]
+    del A[k]
 except KeyError:
     print('ОЙ')
