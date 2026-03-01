@@ -1,0 +1,19 @@
+def max(a, b):
+    if a > b:
+        return a
+    elif a < b:
+        return b
+    else:
+        return 0
+
+def max3(a, b, c):
+    return max(max(a, b), c)
+
+print(max3(3, 5, 4))
+
+def f():
+    a = 1
+    print(a)
+a = 0
+f()
+print(a)
