@@ -1,0 +1,16 @@
+class Vehicle(object):
+    def __init__(self, name, color, doors):
+        self.name = name
+        self.color = color
+        self.doors = doors
+
+    def brake(self):
+        return 'Braking'
+
+    def drive(self):
+        return 'Можно водить'
+
+if __name__ == '__main__':
+    Tesla = Vehicle('Cybertruck', 'Grey', 4)
+    print(Tesla.brake())
+    print(Tesla.drive())
