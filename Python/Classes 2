@@ -1,0 +1,28 @@
+class Train(object):
+    def __init__(self, number, destination, time):
+        self.number = number
+        self.destination = destination
+        self.time = time
+
+    def info(self, num):
+        print(f'Train No: {num.number}\nTrain Destination: {num.destination}\nTrain Time: {num.time}')
+
+trains = [
+    Train('001', 'Москва', '10:00'),
+    Train('002', 'Берлин', '13:30'),
+    Train('003', 'Минск', '18:15'),
+    Train('004', 'Пекин', '13:00'),
+    Train('005', 'Владивосток', '9:40')
+]
+
+num = input('Введите номер поезда: ')
+a = None
+for i in trains:
+    if i.number == num:
+        a = i
+        break
+
+if a:
+    print(a.info(a))
+else:
+    print('Такого поезда нет')
