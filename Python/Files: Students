@@ -1,0 +1,10 @@
+with open('Students.txt', 'r', encoding='utf-8') as Var:
+    lines = Var.readlines()
+    for line in lines:
+        parts = line.strip().split()
+        if not parts:
+            continue
+        grade = float(parts[-1])
+        name = ''.join(parts[:-1])
+        if grade < 3:
+            print(f'{name} - {grade}')
