@@ -1,0 +1,19 @@
+#считывание всего файла
+handle = open('out.txt', 'r')
+data = handle.read()
+print(data)
+handle.close
+
+#считывание всего файла с возвратом строк
+handle = open('out.txt', 'r')
+data = handle.readlines()
+print(data)
+handle.close
+
+#считывание одной строки
+handle = open('out.txt', 'r')
+data = handle.readline()
+print(data)
+
+with open('text.txt', 'w') as Oleg:
+    Oleg.write('Privet')
