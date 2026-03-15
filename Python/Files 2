@@ -1,0 +1,7 @@
+with open('text.txt', 'w', encoding='utf-8') as Var:
+    while True:
+        put = input()
+        if put != '':
+            Var.write(f'{put}\n')
+        else:
+            break
