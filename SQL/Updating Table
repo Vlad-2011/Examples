@@ -1,0 +1,1 @@
+UPDATE EMPLOYEES SET ssn = 'Marketing' WHERE EMP_AGE >= 24
