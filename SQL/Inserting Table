@@ -1,0 +1,1 @@
+INSERT INTO EMPLOYEES VALUES('IT', 'Vlad', 14, 'Lobnya', 2)
