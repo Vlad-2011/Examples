@@ -1,0 +1,21 @@
+import requests
+req = requests.get('http://www.tutsplus.com/')
+print(req.encoding) # возвращает utf-8 (кодировку)
+print(req.status_code) # возвращает статус
+print(req.elapsed) # возвращает время
+print(req.url) # возвращает ссылку
+print(req.history)
+print(req.headers)
+
+url = 'http://en.wikipedia.org/w/index.php'
+params = {'search': 'Нанотехнология'}
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+           'AppleWebKit/537.36 (KHTML, like Gecko)'
+           'Chrome/120.0.0.0 Safari/537.36'
+}
+response = requests.get(url, params=params, headers=headers)
+response.raise_for_status()
+with open('Nanotechnology.html', 'wb') as file:
+    for chunk in response.iter_content(chunk_size=50000):
+        file.write(chunk)
+print('Готово!')
