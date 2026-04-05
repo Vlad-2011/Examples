@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страница с заголовками и задачей</title>
+    <!-- Подключение современного шрифта для лучшего стиля -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        /* Базовый сброс стилей и настройка */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            color: #0f172a;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Карточка-контейнер для аккуратного оформления */
+        .page-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+            padding: 2rem 2rem 2.5rem 2rem;
+            transition: all 0.2s ease;
+        }
+
+        /* Стили для заголовков согласно иерархии (первый, второй, третий уровни) */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            color: #0a2540;
+            border-left: 6px solid #3b82f6;
+            padding-left: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-top: 1.75rem;
+            margin-bottom: 0.75rem;
+            color: #1e293b;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2d3a4b;
+        }
+
+        /* Пример ссылки — стилизованная под современный дизайн */
+        .demo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #eff6ff;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            margin: 1rem 0 1.25rem 0;
+            transition: all 0.2s ease;
+        }
+
+        .demo-link a {
+            color: #2563eb;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 1rem;
+            border-bottom: 1px dashed #94a3b8;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .demo-link a:hover {
+            color: #1e40af;
+            border-bottom-color: #1e40af;
+        }
+
+        .demo-link::before {
+            content: "🔗";
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Блок "Задача № 1" — акцентная карточка */
+        .task-block {
+            margin-top: 2rem;
+            background: #fefce8;
+            border-left: 6px solid #eab308;
+            border-radius: 20px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+            transition: 0.1s;
+        }
+
+        .task-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .task-title::before {
+            content: "📋";
+            font-size: 1.4rem;
+        }
+
+        .task-description {
+            font-size: 1rem;
+            color: #2d3e2b;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        .task-description p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Дополнительный декор для создания атмосферы чистоты */
+        hr {
+            margin: 1rem 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, #e2e8f0, #cbd5e1, #e2e8f0);
+        }
+
+        /* адаптивность */
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+            .page-card {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.25rem;
+            }
+            .task-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* маленькая подпись/опционально, но можно оставить для примера */
+        .note {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-align: center;
+            border-top: 1px solid #eef2f6;
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="page-card">
+    <!-- Заголовок первого уровня -->
+    <h1>Заголовок первого уровня</h1>
+
+    <!-- Заголовок второго уровня -->
+    <h2>Заголовок второго уровня</h2>
+
+    <!-- Заголовок третьего уровня -->
+    <h3>Заголовок третьего уровня</h3>
+
+    <!-- Пример ссылки ведущей на другую страницу (как в описании) -->
+    <div class="demo-link">
+        <a href="#" id="sampleLink">Пример ссылки ведущей на другую страницу</a>
+    </div>
+
+    <!-- Блок с задачей: Задача № 1 -->
+    <div class="task-block">
+        <div class="task-title">Задача № 1</div>
+        <div class="task-description">
+            <p>✨ Здесь может быть условие задачи, описание или требования к выполнению.</p>
+            <p>📌 Вы можете заменить этот текст на любое нужное содержание, сохраняя структуру страницы.</p>
+        </div>
+    </div>
+
+    <!-- Небольшой дополнительный элемент (не мешает основному содержанию)
+         Можно убрать, но для полноты стиля оставлю аккуратную подпись -->
+    <div class="note">
+        🧩 Структура соответствует заголовкам H1, H2, H3, примеру ссылки и выделенному блоку «Задача № 1»
+    </div>
+</div>
+
+<!-- Небольшой скрипт для демонстрации работы ссылки (просто пример перехода на пустую страницу, но можно указать реальный URL) -->
+<script>
+    (function() {
+        const link = document.getElementById('sampleLink');
+        if (link) {
+            // Чтобы пример ссылки выглядел правдоподобно, но не уводил с текущей страницы случайно,
+            // сделаем предупреждение в консоль, а переход будет открывать пример "about:blank" или текущий якорь.
+            // Но в соответствии с пожеланием — ссылка должна вести на другую страницу.
+            // Установим адрес демонстрационной страницы, можно изменить на желаемый URL.
+            // Для наглядности ссылка будет вести на https://example.com — стандартный домен для примеров.
+            // Если вы хотите изменить, просто замените href в HTML или здесь.
+            link.setAttribute('href', 'https://example.com');
+            link.setAttribute('target', '_blank');  // открывается в новой вкладке для удобства
+            link.setAttribute('rel', 'noopener noreferrer');
+        }
+    })();
+</script>
+</body>
+</html>
